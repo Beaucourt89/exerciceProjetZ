@@ -14,11 +14,9 @@ digits.push(6);
 digits.push(7);
 digits.push(8);
 digits.push(9);
-console.log(digits);
 
 // rewrite your variable `last` using `length`;
 const last = digits[digits.length - 1];
-console.log(last);
 
 // create another array called `litteralDigits` from `zero` to `nine` where each array entry is a spelled-out number;
 const litteralDigits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];

@@ -12,12 +12,18 @@ const francis = {
   name : "Francis"
 };
 
+let canFriedaDrinkAlcohol = frieda.age < 18;
+let canFrancisDrinkAlcohol = francis.age > 18;
+
 // Create two variables `canFriedaDrinkAlcohol` and `canFrancisDrinkAlcohol` to answer,
 // respectively, to the question "Can he / she drink alcohol?".
 // Think about the Primitive Data Type that is best suited for the answer.
 // Hint: Think about the number of options
-let canFriedaDrinkAlcohol = true;
-let canFrancisDrinkAlcohol = false;
+
+// premiere facon de faire 
+
+//let canFriedaDrinkAlcohol = true;
+//let canFrancisDrinkAlcohol = false;
 
 // These variables should stay correct if we modify the ages of the objects
 // `francis` and `frieda` in the declaration.
@@ -26,6 +32,8 @@ let canFrancisDrinkAlcohol = false;
 // "Frieda|Francis should be inside an object frieda|francis".
 // All the other tests should work.
 
+
+// premiere facon de faire 
 if(frieda.age < 18){
   canFriedaDrinkAlcohol = !canFriedaDrinkAlcohol;
 }
