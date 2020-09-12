@@ -8,5 +8,5 @@ let stout = digits.length;
 while(stout < 10){
   digits.push(stout);
   stout++;
-  console.log(digits);
+  //console.log(digits);
 }

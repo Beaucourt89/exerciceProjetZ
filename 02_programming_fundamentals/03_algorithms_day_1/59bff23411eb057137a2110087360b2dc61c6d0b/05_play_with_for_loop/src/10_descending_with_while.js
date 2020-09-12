@@ -15,6 +15,15 @@ const litteralDigits = [
   "nine",
 ];
 
-for(let i = litteralDigits.length; i > 0 ; i--){
-  console.log(litteralDigits[i]);
+// for(let i = litteralDigits.length - 1; i >= 0 ; i--){
+//   console.log(litteralDigits[i]);
+// }
+let i = 0;
+let arrayLength = litteralDigits.length;
+
+while(arrayLength  > i ) {
+  let val = litteralDigits[arrayLength - 1];
+  arrayLength--;
+  console.log(val);
+  
 }
