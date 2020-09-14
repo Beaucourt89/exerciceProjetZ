@@ -16,7 +16,6 @@
 let wave = "";
 for(let i = 0; i < 30; i++){
   wave += "~";
-  
 }
 for(let i = 0; i < 9; i++){
   if(i === 1){
@@ -30,5 +29,4 @@ for(let i = 0; i < 9; i++){
   } else {
     console.log(wave);
   }
-  console.log(wave);
 }

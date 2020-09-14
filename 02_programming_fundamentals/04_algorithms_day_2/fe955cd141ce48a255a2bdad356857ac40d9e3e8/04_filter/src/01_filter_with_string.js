@@ -1,29 +1,21 @@
 function filter(array, str) {
   // Your code here
-  const tabtab = [];
- 
-
+  const tab = [];
   for(let i = 0; i < array.length; i++){
-    
-    if(array[i] % 2 === 0 && str === "pair"){
-  
-      tabtab.push(array[i]);
-      
-    }else if(array[i] % 2 !== 0 && str === "impair"){
-
-      tabtab.push(array[i]);
-     
-    }else{
-      console.log("Une des deux conditions n'est pas respecté");
+    if(array[i] % 2 === 0 && str === "even"){
+      tab.push(array[i]);
+    } else if(str === "odd" && array[i] % 2 !== 0){
+      tab.push(array[i]);
+    } else if(str !== "even" && str !== "odd"){
+      return array;
     }
   }
-  console.log(tabtab);
-  return array;
-
+  return tab;
 }
-filter(([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]), "pair");
-
-
+const tableau = [1,2,3,4,5];
+console.log(filter(tableau,"even"));
+console.log(filter(tableau,"odd"));
+console.log(filter(tableau,"hfbizhefgizhfgi"));
 
 
 // do not remove this line, it is for tests

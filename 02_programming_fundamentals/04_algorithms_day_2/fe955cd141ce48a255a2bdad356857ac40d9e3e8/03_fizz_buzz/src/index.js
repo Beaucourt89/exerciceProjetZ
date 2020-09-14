@@ -1,4 +1,3 @@
-
 function fizzBuzz(list) {
   // Code the function here.
   const newtab = [];

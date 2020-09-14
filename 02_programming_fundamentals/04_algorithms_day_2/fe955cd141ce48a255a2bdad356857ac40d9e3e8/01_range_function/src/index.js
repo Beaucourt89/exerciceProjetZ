@@ -16,8 +16,6 @@ function range(nb1,nb2) {
 
 range(26,12);
 
-
-
 // Do not remove last lines, it is for tests
 module.exports = range;
 
