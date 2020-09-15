@@ -21,23 +21,28 @@ function getConfig(config = {}) {
       diskSpace: 20,
     },
   };
-
-  const result = {
-    user: { ...defaultConfig.user, ...config.user },
-    hardware: { ...defaultConfig.hardware, ...config.hardware },
+  return {
+    ...defaultConfig,
+    ...config,
+    user: {
+      ...defaultConfig.user,
+      ...config.user,
+    },
+    hardware: {
+      ...defaultConfig.hardware,
+      ...config.hardware,
+    },
   };
-
-  return result;
 }
 
-console.log(getConfig());
+getConfig();
 
 // const testID = {
 //   // firstName: "John",
 //   lastName: "Rambo",
 //   address: { city: "Hope", country: "Canada" },
 // };
-const useri = { address: { country: "France" } };
+//const useri = { address: { country: "France" } };
 
 function logInfos(user = {}) {
   const redactedUser = {
@@ -49,7 +54,7 @@ function logInfos(user = {}) {
     },
   };
 
-  const userIdentify = {
+  const userIdentity = {
     ...redactedUser,
     ...user,
     address: {
@@ -57,9 +62,13 @@ function logInfos(user = {}) {
       ...user.address,
     },
   };
+  const {
+    firstName,
+    lastName,
+    address: { city, country },
+  } = userIdentity;
 
-  console.log(`${userIdentify.firstName} ${userIdentify.lastName} lives in ${userIdentify.address.city}, ${userIdentify.address.country}.`);
-
+  console.log(`${firstName} ${lastName} lives in ${city}, ${country}.`);
 }
 
 logInfos();

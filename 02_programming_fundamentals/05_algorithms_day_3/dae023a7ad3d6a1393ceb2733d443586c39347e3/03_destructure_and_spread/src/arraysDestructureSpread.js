@@ -1,13 +1,14 @@
 function arrayCrusher(firstArray, secondArray) {
-  // code here
-  // const numbers = arrayCrusher([1, 2], [3, 4]);
-  // const mixTabl = [...numbers];
-  // console.log(mixtab);
-  // return mixTabl;
+  return [...firstArray, ...secondArray];
 }
 
 function recursiveBouncer(list) {
-  // code here
+  if(list.length === 0){
+    return;
+  }
+  const [firstElement, ...rest] = list;
+  console.log(firstElement);
+  recursiveBouncer(rest);
 }
 
 module.exports = {
