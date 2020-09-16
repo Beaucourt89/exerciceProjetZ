@@ -1,33 +1,27 @@
 const machine = {
+  litersOfCoffee: 0,
 
-  litersOfCoffee : 0,
-
-  fillWithLitersOfCoffee : function (litersOfCoffee){
+  fillWithLitersOfCoffee: function (litersOfCoffee) {
     this.litersOfCoffee += litersOfCoffee;
-    
-    
     return this;
   },
 
-  expresso : function (){
-    if(this.litersOfCoffee >= 0.08){
-      this.litersOfCoffee =  this.litersOfCoffee - 0.08;
+  littreActualise: function (laBoisson) {
+    if (this.litersOfCoffee >= laBoisson) {
+      this.litersOfCoffee = this.litersOfCoffee - laBoisson;
       return true;
-    }else{
+    } else {
       return false;
     }
   },
 
-  longCoffee : function (){
-    if(this.litersOfCoffee >= 0.15){
-      this.litersOfCoffee =  this.litersOfCoffee - 0.15;
-      return true;
-    }else{
-      
-      return false;
-    }
+  expresso: function () {
+    return this.littreActualise(0.08);
   },
 
+  longCoffee: function () {
+    return this.littreActualise(0.15);
+  },
 };
 
 module.exports = machine;
