@@ -3,31 +3,25 @@ function numberGame(reader, min = 1, max = 100) {
   const numberMister =Math.round(Math.random() * (max - min) + min);
   console.log(numberMister);
 
-  let nouvelleQuestion = "Enter your number :  \n>";
-
   //2em Function
-  const StartGame = () => {
-    reader.question(nouvelleQuestion, (number) => {
+  const StartGame = (questionText) => {
+    reader.question(questionText, (number) => {
       if (isNaN(number)) {
-        nouvelleQuestion = `${number}, is not a Number!! \n>`;
-        StartGame();
+        StartGame (`${number}, is not a Number!! \n>`);
       } else if (number < min || number > max) {
-        nouvelleQuestion = `Number is between ${min} and ${max} \n> `;;
-        StartGame();
+        StartGame (`Number is between ${min} and ${max} \n> `);
       } else if (number < numberMister) {
-        nouvelleQuestion = "Too low \n> ";
-        StartGame();
+        StartGame ("Too low \n> ");
       } else if (number > numberMister) {
-        nouvelleQuestion = "Too high \n> ";
-        StartGame();
+        StartGame ("Too high \n> ");
       } else {
-        nouvelleQuestion = "You won!";
+        StartGame ("You won!");
         console.log("You won!");
         reader.close();
       }
     });
   };
-  StartGame();
+  StartGame("Trouvez le nombre mister !\n>");
 }
 
 module.exports = numberGame;

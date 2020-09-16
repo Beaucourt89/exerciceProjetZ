@@ -1,63 +1,101 @@
-const readline = require("readline");
-​
-const reader = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-​
-const tasks = [
-  {
-    taskName: "Lessive",
-    done: true
-  },
-  {
-    taskName: "Cuisine",
-    done: false
-  },
+const divResultat = document.querySelector("#resultat");
+var tabJeu = [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
 ];
-​
-const askForTask = () => {
-  reader.question("Ajouter une tâche\n> ", (taskName) => {
-    const task = {
-      taskName,
-      done: false
-    };
-​
-    tasks.push(task);
-    menu();
-  })
-}
-​
-const presentTask = (task, i) => {
-  console.log(`${i + 1} - ${task.done ? "[X]" : "[ ]"} ${task.taskName}`);
-}
-​
-function presentTasks() {
-  tasks.forEach(presentTask);
-  menu();
-}
-​
-function menu() {
-  console.log("1 - show tasks");
-  console.log("2 - add a task");
-  console.log("3 - quit");
-  reader.question("Choose an action\> ", (choice) => {  
-    switch (choice) {
-      case "1":
-        presentTasks();
-        break;
-      case "2":
-        askForTask();
-        break;
-      case "3":
-        console.log("Bye!");
-        reader.close();
-        break;
-      default:
-        console.log("command unknown");
-        menu();
+// var tabResultat = [
+//     [1,4,3,4],
+//     [1,2,3,2],
+//     [7,8,6,5],
+//     [8,7,5,6]
+// ]
+var tabResultat = genereTableauAleatoire();
+var oldSelection=[];
+var nbAffiche = 0;
+var ready = true;
+afficherTableau();
+function afficherTableau(){
+    var txt ="";
+    for(var i=0; i < tabJeu.length ; i++){
+        txt += "<div>";
+        for(var j=0; j < tabJeu[i].length ; j++){
+            if(tabJeu[i][j] === 0){
+                txt +="<button class='btn btn-primary m-2' style='width:100px;height:100px' onClick='verif(\""+i+"-"+j+"\")'>Afficher</button>";
+            } else {
+                txt += "<img src='"+getImage(tabJeu[i][j])+"' style='width:100px;height:100px' class='m-2'>";
+            } 
+        }
+        txt += "</div>";
     }
-  })  
+    divResultat.innerHTML = txt;
 }
-​
-menu();
+function getImage(valeur){
+    var imgTxt = "image/";
+    switch(valeur){
+        case 1 : imgTxt += "elephant.png";
+        break;
+        case 2 : imgTxt += "giraffe.png";
+        break;
+        case 3 : imgTxt += "hippo.png";
+        break;
+        case 4 : imgTxt += "monkey.png";
+        break;
+        case 5 : imgTxt += "panda.png";
+        break;
+        case 6 : imgTxt += "parrot.png";
+        break;
+        case 7 : imgTxt += "penguin.png";
+        break;
+        case 8 : imgTxt += "pig.png";
+        break;
+        default : console.log("cas non pris en compte")
+    }
+    return imgTxt;
+}
+function verif(bouton){
+    if(ready){
+        nbAffiche++;
+        var ligne = bouton.substr(0,1);
+        var colonne = bouton.substr(2,1);
+        tabJeu[ligne][colonne] = tabResultat[ligne][colonne];
+        afficherTableau();
+        if(nbAffiche>1) {
+            ready = false;
+            setTimeout(() => {
+                //verification
+                if(tabJeu[ligne][colonne] !== tabJeu[oldSelection[0]][oldSelection[1]]){
+                    tabJeu[ligne][colonne] = 0;
+                    tabJeu[oldSelection[0]][oldSelection[1]] = 0;
+                }
+                afficherTableau();
+                ready = true;
+                nbAffiche = 0;
+                oldSelection = [ligne,colonne];
+            },500)
+        } else {
+            oldSelection = [ligne,colonne];
+        } 
+    }
+}
+function genereTableauAleatoire(){
+    var tab = [];
+    var nbImagePosition=[0,0,0,0,0,0,0,0];
+    for(var i = 0 ; i < 4 ; i++){
+        var ligne = [];
+        for(var j = 0 ; j < 4 ; j++){
+            var fin = false;
+            while(!fin){
+                var randomImage = Math.floor(Math.random() * 8);
+                if(nbImagePosition[randomImage] < 2){
+                    ligne.push(randomImage+1);
+                    nbImagePosition[randomImage]++;
+                    fin = true;
+                }
+            }
+        }
+        tab.push(ligne);
+    }
+    return tab;
+}

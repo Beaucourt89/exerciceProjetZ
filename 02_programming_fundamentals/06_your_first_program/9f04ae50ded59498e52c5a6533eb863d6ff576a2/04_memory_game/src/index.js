@@ -29,14 +29,18 @@ const symbols = {
   salad: "🥗",
   clown: "🤡",
 }
-for (const tableauDeSymbols in symbols){
+const tabtab = [];
+for (let tableauDeSymbols in symbols){
+  //for(let i = 0; i < tableauDeSymbols.length; i++){
+tabtab.push(tableauDeSymbols);
+    console.log(tabtab);
+  //}
+//tabtab.push(tabtab[symbols[tableauDeSymbols]]);
 
-  console.log(`${tableauDeSymbols} et ${symbols[tableauDeSymbols]}`);
+  //console.log(`${tableauDeSymbols} et ${symbols[tableauDeSymbols]}`);
+  
 }
-for (const tableauDeSymbols2 in symbols){
 
-  console.log(`${tableauDeSymbols2} `);
-}
 
 
 //fonction, qui renvoie le tableau.

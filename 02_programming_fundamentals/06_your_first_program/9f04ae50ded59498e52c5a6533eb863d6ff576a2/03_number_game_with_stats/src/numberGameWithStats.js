@@ -1,14 +1,10 @@
-//1er function
 function numberGameWithStats(reader, min = 1, max = 100) {
   const numberMister = Math.round(Math.random() * (max - min) + min);
   console.log(numberMister);
-
   let nouvelleQuestion = "Enter your number :  \n>";
-  let nombreDeCoup = 0;
+  let nombreDeCoup = 1;
   let compteurBoom = 5;
  
-
-  //2em Function
   const StartGame = () => {
     reader.question(nouvelleQuestion, (number) => {
       if (compteurBoom !== 1) {
@@ -33,6 +29,7 @@ function numberGameWithStats(reader, min = 1, max = 100) {
           compteurBoom--;
           StartGame();
         } else {
+          console.log("You won!");
           console.log(`Bravo tu as trouvé le nombre en  ${nombreDeCoup} coups \n> `);
           reader.close();
         }
@@ -46,5 +43,4 @@ function numberGameWithStats(reader, min = 1, max = 100) {
   };
   StartGame();
 }
-
 module.exports = numberGameWithStats;
