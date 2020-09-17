@@ -1,4 +1,7 @@
-const humanFactory = () => {};
+
+const humanFactory = () => {
+  
+};
 
 const createHumans = () => {};
 
