@@ -1,0 +1,167 @@
+# SHIFUMI
+
+## Le jeu
+
+La plupart des gens savent comment jouer à ShiFuMi (一 二三) mais si vous avez besoin d'une actualisation sur les [règles] (https://en.wikipedia.org/wiki/Rock_paper_scissors) jetez un œil!
+
+Le but de la journée est de coder ce jeu dans le terminal et nous allons le parcourir morceau par morceau.
+
+## L'interface de jeu
+
+Dans un programme, quel que soit son objectif, nous avons besoin d'une interface pour obtenir des entrées utilisateur et présenter des données aux utilisateurs.
+
+### Readline
+
+Comme dans le jour du _Premier programme_, nous utiliserons `readline` pour gérer cette partie:
+
+`` `js
+const readline = require ("readline");
+
+lecteur const = readline.createInterface ({
+  entrée: process.stdin,
+  sortie: process.stdout,
+});
+''
+
+### Commencer le jeu
+
+Nous devons également commencer par saluer nos joueurs et leur donner quelques conseils ou instructions:
+
+`` `js
+console.log ("Bienvenue sur ShiFuMi");
+
+reader.question ("Veuillez choisir un mouvement \ n>", (déplacer) => {
+  // Gère le mouvement
+});
+''
+
+> Ceci est ** VOTRE ** jeu, n'hésitez pas à utiliser des émojis et / ou des symboles, soutenez-le autant que vous le souhaitez!
+
+### L'affichage
+
+#### Effacer l'écran
+
+Si à un moment donné vous devez effacer l'écran, utilisez:
+
+`` `js
+const clear = () => console.log ("\ x1B [2J \ x1B [0f");
+
+clair();
+''
+
+#### Symboles
+
+Voici les symboles de votre jeu.
+Vous devrez les stocker dans des variables pour les utiliser dans le jeu.
+
+`` `js
+// ROCHE
+[
+  "________",
+  "--- '_, |",
+  "(__ (__)",
+  "(_____)",
+  "(____)",
+  "---.__ (___)",
+];
+
+// PAPIER
+[
+  "_______",
+  "---- '____) ____",
+  "_______)",
+  "_______)",
+  "_______)",
+  "----.__________)",
+];
+
+// LES CISEAUX
+[
+  "____",
+  "--- '| ________",
+  "(__) ________)",
+  "_________)",
+  "(____)",
+  "---.__ (___)",
+];
+''
+
+Shifumi est un jeu à deux joueurs, et ils jouent face à face. Pour refléter cela, vous devez l'afficher comme ceci:
+
+''
+Coup du premier joueur
+    ________
+--- '_, |
+      (__ (__)
+      (_____)
+      (____)
+---.__ (___)
+
+Coup du deuxième joueur
+          ____
+ ________ | «---
+(________ (__)
+(_________
+      (____)
+       (___) __.---
+''
+
+> Le coup du deuxième joueur doit être inversé !!
+
+## Objectif du jour
+
+Lors du développement d'un projet, _TOUT projet_, nous avons besoin de jalons. En voici quelques-uns pour vous guider tout au long de la journée:
+
+1. Le jeu vous permet de jouer contre une IA totalement stupide. Il doit sélectionner un mouvement aléatoire à chaque fois.
+2. Le jeu vous permet de jouer dans une version de jeu à un tour à deux joueurs.
+3. Le jeu vous permet de jouer dans une version à deux joueurs best of 3.
+4. Le jeu vous permet de jouer contre une IA intelligente qui [aura une stratégie] (https://arstechnica.com/science/2014/05/win-at-rock-paper-scissors-by-knowing-thy- adversaire / #: ~: text = Donc% 2C% 20e est% 20 est% 20le% 20 meilleur, chose% 20 que% 20 vous% 20juste% 20jouée.).
+
+Commençons par un ** plan de base étape par étape ** pour la ** version stupide de l'IA **:
+
+- Saluez l'utilisateur.
+- Demandez à l'utilisateur une entrée.
+- Générez le choix de l'IA.
+- Imprimez les choix du joueur et de l'IA.
+- Comparez les choix et calculez le résultat du tour.
+- Imprimez le résultat au lecteur.
+
+Voici le résultat recherché pour cette première version:
+
+''
+Bienvenue sur le ShiFuMi!
+Choisissez un mouvement:
+Pierre papier ciseaux? [1, 2, 3]
+> 1
+Déplacement du joueur
+    ________
+--- '_, |
+      (__ (__)
+      (_____)
+      (____)
+---.__ (___)
+
+Déplacement du processeur
+          ____
+ ________ | «---
+(________ (__)
+(_________
+      (____)
+       (___) __.---
+
+Le joueur a gagné !!
+
+Rejouer? (O, n)
+> n
+Merci pour le jeu 😉
+''
+
+> Encore une fois, n'hésitez pas à changer l'affichage, mais le déroulement d'un tour devrait être à peu près comme ça.
+
+### Conseils supplémentaires
+
+Et voici quelques questions auxquelles vous devriez penser:
+
+- Que faire si l'entrée de l'utilisateur n'est pas correcte?
+- Comment calculer et stocker les résultats?
+- Comment redémarrer le jeu?
