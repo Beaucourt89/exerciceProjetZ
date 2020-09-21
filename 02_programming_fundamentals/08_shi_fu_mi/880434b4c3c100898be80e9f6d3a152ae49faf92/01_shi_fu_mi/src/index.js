@@ -80,7 +80,7 @@ const comparer = (saveChooseInIndex, aiSaveChooseInIndex) => {
 const rejouerOUpas = () => {
   reader.question("Tu veux rejouer ??? ( Y / n )", (reponse) => {
     if (reponse.toLowerCase() === "y") {
-      startGame();
+      menu();
     } else if (reponse.toLowerCase() === "n") {
       reader.close();
     } else {
@@ -106,14 +106,19 @@ const joueurTwo = () => {
     const aiIndex = parseInt(playerTwo - 1);
     const aiSaveChooseInIndex = Object.keys(symbols)[aiIndex];
     const aiImage = symbols[aiSaveChooseInIndex].map(reverseLine);
+
+    return { aiIndex, aiSaveChooseInIndex, aiImage};
   });
 };
+
 
 //IA
 const ia = () => {
   const aiIndex = parseInt(iaRandoom());
   const aiSaveChooseInIndex = Object.keys(symbols)[aiIndex];
   const aiImage = symbols[aiSaveChooseInIndex].map(reverseLine);
+
+  return { aiIndex, aiSaveChooseInIndex, aiImage};
 };
 
 //menu
@@ -148,20 +153,24 @@ const startGame = (choixAdv) => {
     const image1 = symbols[saveChooseInIndex];
 
     if (index === 0 || index === 1 || index === 2) {
+      const resultChoixAdv = choixAdv();
 
-      choixAdv(joueurTwo);
+      console.log(resultChoixAdv);
 
       console.log("\n> PlayerOne : \n " + image1.join(" \n "));
-      console.log("\n> PlayerTwo : \n " + aiImage.join(" \n "));
+      console.log("\n> PlayerTwo : \n " + resultChoixAdv.aiImage.join(" \n "));
 
-      comparer(saveChooseInIndex, aiSaveChooseInIndex);
+      comparer(saveChooseInIndex, resultChoixAdv.aiSaveChooseInIndex);
       rejouerOUpas();
     } else {
       console.log("Saisir un valeur ");
 
-      startGame();
+      menu();
     }
   });
 };
 
-startGame();
+// startGame();
+//console.log("114", joueurTwo());
+
+menu();
