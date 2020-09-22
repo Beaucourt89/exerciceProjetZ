@@ -1,12 +1,13 @@
 import { longCoffee, expresso } from "./drinks.js";
-import { putLitersOfCoffee, consumeLitersOfCoffee } from "./container.js";
+import { putLitersOfCoffee, consumeLitersOfCoffee, fillWithLitersOfCoffee } from "./container.js";
 
 const coffeeMachine = {
-  litersOfCoffee: 0,
+  putLitersOfCoffee,
   expresso,
+  fillWithLitersOfCoffee,
   consumeLitersOfCoffee,
   longCoffee,
-  putLitersOfCoffee,
+  
 };
 
 export { coffeeMachine };

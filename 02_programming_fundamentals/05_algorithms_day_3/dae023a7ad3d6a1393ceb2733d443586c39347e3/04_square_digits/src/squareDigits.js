@@ -1,6 +1,15 @@
-function squareDigits() {
-  // Code here
+function squareDigits(number) {
+  if (Number.isInteger(number)) {
+    return parseInt(
+      number
+        .toString()
+        .split("")
+        .map((n) => String(parseInt(n) * parseInt(n)))
+        .join(""),
+    );
+  } else {
+    throw new Error("Not a number");
+  }
 }
 
-// Leave the line below for tests to work
 module.exports = squareDigits;

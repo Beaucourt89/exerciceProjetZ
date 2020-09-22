@@ -1,7 +1,11 @@
-export { consumeLitersOfCoffee, putLitersOfCoffee };
-import { litersOfCoffee } from "./machine.js";
+export { consumeLitersOfCoffee, putLitersOfCoffee, fillWithLitersOfCoffee };
+import{longCoffee, expresso} from "./drinks.js";
 
-function putLitersOfCoffee(liters) {
+function putLitersOfCoffee() {
+  return (litersOfCoffee = 0);
+}
+
+function fillWithLitersOfCoffee(liters) {
   litersOfCoffee += liters;
 }
 

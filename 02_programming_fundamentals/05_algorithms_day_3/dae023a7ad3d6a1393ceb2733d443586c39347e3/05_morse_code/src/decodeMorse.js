@@ -36,10 +36,17 @@ const MORSE_CODE = {
   "---..": "8",
   "----.": "9",
 };
-
-const decodeMorse = () => {
-  // Code here
+const decodeMorse = (morseCode) => {
+  if (typeof morseCode !== "string") {
+    throw new Error("This is not a string.");
+  }
+  return morseCode
+    .split(" ")
+    .reduce(
+      (accumulator, character) => (MORSE_CODE[character] ? accumulator + MORSE_CODE[character] : accumulator + " "),
+      "",
+    )
+    .replace(/\s+/g, " ")
+    .trim();
 };
-
-// Leave line below for tests to work properly
 module.exports = decodeMorse;

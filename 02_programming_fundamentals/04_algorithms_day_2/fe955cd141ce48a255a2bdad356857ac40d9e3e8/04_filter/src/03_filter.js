@@ -4,3 +4,4 @@ function filter(array, fn) {
 
 // do not remove this line, it is for tests
 module.exports = filter;
+

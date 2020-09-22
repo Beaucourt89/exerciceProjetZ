@@ -1,46 +1,50 @@
-function numberGameWithStats(reader, min = 1, max = 100) {
-  const numberMister = Math.round(Math.random() * (max - min) + min);
-  console.log(numberMister);
-  let nouvelleQuestion = "Enter your number :  \n>";
-  let nombreDeCoup = 1;
-  let compteurBoom = 5;
- 
-  const StartGame = () => {
-    reader.question(nouvelleQuestion, (number) => {
-      if (compteurBoom !== 1) {
-        if (isNaN(number)) {
-          nouvelleQuestion = `${number}, is not a Number!! \n>`;
-          nombreDeCoup++;
-          compteurBoom--;
-          StartGame();
-        } else if (number < min || number > max) {
-          nouvelleQuestion = `Number is between ${min} and ${max} \n> `;
-          nombreDeCoup++;
-          compteurBoom--;
-          StartGame();
-        } else if (number < numberMister) {
-          nouvelleQuestion = "Too low \n> ";
-          nombreDeCoup++;
-          compteurBoom--;
-          StartGame();
-        } else if (number > numberMister) {
-          nouvelleQuestion = "Too high \n> ";
-          nombreDeCoup++;
-          compteurBoom--;
-          StartGame();
-        } else {
-          console.log("You won!");
-          console.log(`Bravo tu as trouvé le nombre en  ${nombreDeCoup} coups \n> `);
-          reader.close();
-        }
-      } else {
-        console.log("BOOOOOOOOOOOOOOOOOOOM");
-        reader.close();
-      }
+const getNumberToFind = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-      console.log(compteurBoom);
-    });
-  };
-  StartGame();
+function analyzeResponse(pnumberToFind, pminNumber, pmaxNumber, presponse) {
+  let result = "error";
+  if (isNaN(presponse)) {
+    result = "This was not a number\n";
+  } else {
+    const currentNumber = parseInt(presponse, 10);
+    if (currentNumber < pminNumber || currentNumber > pmaxNumber) {
+      result = `The number is between ${pminNumber} and ${pmaxNumber}\n`;
+    } else if (currentNumber === pnumberToFind) {
+      result = "You won!";
+    } else if (currentNumber < pnumberToFind) {
+      result = "Too low\n";
+    } else if (currentNumber > pnumberToFind) {
+      result = "Too high\n";
+    }
+  }
+  return result;
 }
+
+let currentQuestion = "Enter a number\n> ";
+
+function startGame(reader, number, min, max, attempts = 1) {
+  reader.question(currentQuestion, (response) => {
+    const currentAnalyze = analyzeResponse(number, min, max, response);
+    currentQuestion = currentAnalyze;
+    if (currentAnalyze === "You won!") {
+      console.log(
+        attempts === 1
+          ? "Wooooow! Won with 1 attempt? Did you cheat?"
+          : `${currentAnalyze}\nYou made ${attempts} tries to win!`,
+      );
+      reader.close();
+    } else {
+      startGame(reader, number, min, max, attempts + 1);
+    }
+  });
+}
+
+function numberGameWithStats(reader, min = 1, max = 100) {
+  console.log("Welcome!");
+  console.log(`You have to find the right number, between ${min} and ${max}!`);
+  console.log("Good luck!!");
+  const number = getNumberToFind(min, max);
+  console.log(number);
+  startGame(reader, number, min, max);
+}
+
 module.exports = numberGameWithStats;
