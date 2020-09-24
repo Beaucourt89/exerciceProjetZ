@@ -1,1 +1,3 @@
-console.log("ca marche ");
+const message: string = "Hello Word!";
+console.log(message);
+
