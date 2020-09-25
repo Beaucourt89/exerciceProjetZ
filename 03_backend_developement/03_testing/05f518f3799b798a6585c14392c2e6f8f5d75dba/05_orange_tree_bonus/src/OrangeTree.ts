@@ -59,12 +59,11 @@ class OrangeTree extends Tree {
     if (this.age < 50) { 
       return true;
     }
-    const dieProbability = (this.age - 50) / 50;
+    const chanceToDie = (this.age - 50) / 50
     // age 50 => chanceToDie ~ 0
     // age 75 => chanceToDie = 0.5
     // age 100 => chanceToDie = 1
-    const isAlive = Math.random() > dieProbability
-    return isAlive;
+    return Math.random() < chanceToDie
   }
 
   seed(): void {
