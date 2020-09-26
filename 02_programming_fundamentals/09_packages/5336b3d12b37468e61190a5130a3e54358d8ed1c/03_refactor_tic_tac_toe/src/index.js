@@ -1,5 +1,3 @@
-// ⚠️ don't change this code!
-
 const readline = require("readline");
 const ticTacToe = require("./ticTacToe");
 
@@ -9,4 +7,3 @@ const reader = readline.createInterface({
 });
 
 ticTacToe.start(reader);
-// ⚠️ don't change this code!

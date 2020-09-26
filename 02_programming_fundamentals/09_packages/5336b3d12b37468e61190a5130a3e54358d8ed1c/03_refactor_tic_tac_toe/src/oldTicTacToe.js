@@ -1,4 +1,3 @@
-const display = require('./display.js');
 const readline = require("readline");
 
 const reader = readline.createInterface({
@@ -6,31 +5,31 @@ const reader = readline.createInterface({
   output: process.stdout,
 });
 
-// function renderCell(cell) {
-//   if (cell === null) {
-//     return "_";
-//   } else {
-//     return cell;
-//   }
-// }
+function renderCell(cell) {
+  if (cell === null) {
+    return "_";
+  } else {
+    return cell;
+  }
+}
 
-// function renderRow(letter, state) {
-//   const cells = state[letter];
+function renderRow(letter, state) {
+  const cells = state[letter];
 
-//   const row = cells.map(renderCell).join(" | ");
+  const row = cells.map(renderCell).join(" | ");
 
-//   return `${letter} ${row}`;
-// }
+  return `${letter} ${row}`;
+}
 
-// function renderBoard(state) {
-//   const letters = Object.keys(state);
+function renderBoard(state) {
+  const letters = Object.keys(state);
 
-//   const rows = letters.map((letter) => renderRow(letter, state)).join("\n");
+  const rows = letters.map((letter) => renderRow(letter, state)).join("\n");
 
-//   const header = "  1   2   3";
+  const header = "  1   2   3";
 
-//   return `${header}\n${rows}`;
-// }
+  return `${header}\n${rows}`;
+}
 
 function isNotNull(value) {
   return value !== null;
@@ -96,11 +95,11 @@ function handleInput(input) {
   if (coordinate) {
     updateState(coordinate);
     if (hasWinner()) {
-      console.log(display.renderBoard(state));
+      console.log(renderBoard(state));
       console.log(`Congratulations ${currentPlayer}, you won! ＼(＾O＾)／`);
       reader.close();
     } else if (gameIsFinished(state)) {
-      console.log(display.renderBoard(state));
+      console.log(renderBoard(state));
       console.log("Looks like it's a tie. Thanks for playing! ¯\\_(ツ)_/¯");
       reader.close();
     } else {
@@ -139,7 +138,7 @@ function nextPlayer() {
 }
 
 function playTurn() {
-  console.log(display.renderBoard(state));
+  console.log(renderBoard(state));
   reader.question(`${currentPlayer}: What is your move? e.g: a1\n`, handleInput);
 }
 
@@ -165,8 +164,4 @@ function hasWinner() {
   return WINNING_COORDINATES.some(isWinningLine);
 }
 
-
 start();
-//renderRow();
-//renderCell();
-//renderBoard();

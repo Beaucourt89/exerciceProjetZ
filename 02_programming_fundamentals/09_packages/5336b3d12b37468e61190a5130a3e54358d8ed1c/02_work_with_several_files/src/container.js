@@ -1,19 +1,15 @@
-export { consumeLitersOfCoffee, putLitersOfCoffee, fillWithLitersOfCoffee };
-import{longCoffee, expresso} from "./drinks.js";
+let numberOfLiters = 0;
 
-function putLitersOfCoffee() {
-  return (litersOfCoffee = 0);
+export function putLitersOfCoffee(quantity) {
+  numberOfLiters = quantity;
 }
 
-function fillWithLitersOfCoffee(liters) {
-  litersOfCoffee += liters;
-}
+export function consumeLitersOfCoffee(quantity) {
+  if (numberOfLiters - quantity >= 0) {
+    numberOfLiters -= quantity;
 
-function consumeLitersOfCoffee(quantityInCentiliters) {
-  if (litersOfCoffee - quantityInCentiliters >= 0) {
-    litersOfCoffee -= quantityInCentiliters;
     return true;
-  } else {
-    return false;
   }
+
+  return false;
 }

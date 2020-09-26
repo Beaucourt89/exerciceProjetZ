@@ -1,13 +1,14 @@
-import { longCoffee, expresso } from "./drinks.js";
-import { putLitersOfCoffee, consumeLitersOfCoffee, fillWithLitersOfCoffee } from "./container.js";
+import * as container from "./container.js";
+import * as drinks from "./drinks.js";
 
-const coffeeMachine = {
-  putLitersOfCoffee,
-  expresso,
-  fillWithLitersOfCoffee,
-  consumeLitersOfCoffee,
-  longCoffee,
-  
-};
+export function fillWithLitersOfCoffee(liter) {
+  container.putLitersOfCoffee(liter);
+}
 
-export { coffeeMachine };
+export function expresso() {
+  return drinks.expresso(container);
+}
+
+export function longCoffee() {
+  return drinks.longCoffee(container);
+}

@@ -25,7 +25,5 @@ function renderBoard(state) {
 }
 
 module.exports = {
-  renderCell,
   renderBoard,
-  renderRow,
 };
