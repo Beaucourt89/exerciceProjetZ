@@ -1,4 +1,4 @@
-import readline from "readline";
+import * as readline from "readline";
 import calculator from "./calculator.js";
 
 //fonction qui permet de clear la console
@@ -9,6 +9,7 @@ const reader = readline.createInterface({
   output: process.stdout,
 });
 
+calculator(reader);
 // function messageWrongOperation() {
 //   console.log(console.log("Choose an operation: [ + - * / ]"));
 // }
@@ -41,4 +42,3 @@ const reader = readline.createInterface({
 // }
 
 //startCalculator();
-calculator(reader);

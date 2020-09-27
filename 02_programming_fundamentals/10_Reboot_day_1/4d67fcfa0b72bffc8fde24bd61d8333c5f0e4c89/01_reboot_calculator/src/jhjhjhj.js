@@ -1,16 +1,56 @@
-//des variables 
-const name = "TimAvecVariable";
-const lastname = "BabaAvecVariable";
-const name2 = "MathieuAvecVariable";
-const lastname2 = "BebeAvecVariable";
+// const addition = (nb1, nb2) => nb1 + nb2;
+// const subtraction = (nb1, nb2) => nb1 - nb2;
+// const multiplication = (nb1, nb2) => nb1 * nb2;
+// const division = (nb1, nb2) => nb1 / nb2;
 
-console.log(name2 + lastname2);
-console.log(name + lastname);
+//export default {addition, subtraction, multiplication, division};
+
+let R;
+const ask = (question, callback) => R.question(`${question}\n>`, callback);
+
+const parseNumber = (number) => {
+  const modifiedNumber = number.replace(",", ".");
+  parseFloat(modifiedNumber);
+};
+
+// export default function calculator(reader) {
+//   R = reader;
+//   console.log("Welcome to the calculator!");
+//   R.ask("Enter the first number\n> ", (firstInput) => {
+//     R.ask("Choose an operation: [ + - * / ]\n> ", (operation) => {
+//       R.ask("Enter the second number\n> ", (secondInput) => {
+//         console.log(firstNumber, operation, secondNumber);
+
+//         const firstNumber = parseNumber(firstInput);
+//         const secondNumber = parseNumber(secondInput);
+
+//         let result;
+//         switch (operation) {
+//           case "+":
+//             result = firstNumber + secondNumber;
+//             break;
+//           case "_":
+//             result = firstNumber - secondNumber;
+//             break;
+//           case "*":
+//             result = firstNumber - secondNumber;
+//             break;
+//           case "/":
+//             result = firstNumber / secondNumber;
+//             break;
+//           default:
+//             console.log("Choose an operation: [ + - * / ]");
+//             break;
+//         }
+//         if (result) {
+//           console.log(`${firstNumber} ${operation} ${secondNumber} = ${result}`);
+//           reader.close();
+//         } else {
+//           calculator(R);
+//         }
 
 
-//une fonction
-function nameComplet(name, lastname) {
-  console.log(name + lastname);
-}
-nameComplet("TIM", "BABA");
-nameComplet("MATHIEU", "BEBE");
+//       });
+//     });
+//   });
+// }
