@@ -1,11 +1,10 @@
 import readline from "readline";
-import affichagePageAccueil from "./affichagePageAccueil.js";
-
+import loyaltyCardManager from "./reTestIndex/loyaltyCardManager/index.js"
 
 const reader = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
 
-console.log(affichagePageAccueil.menu(), );
-console.log(affichagePageAccueil.choixMenu(reader));
+
+loyaltyCardManager(reader);
