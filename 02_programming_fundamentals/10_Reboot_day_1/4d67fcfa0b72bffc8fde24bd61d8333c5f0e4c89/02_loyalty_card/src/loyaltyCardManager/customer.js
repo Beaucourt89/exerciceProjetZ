@@ -2,8 +2,8 @@
 //import uuid sert a importer un id unique
 import * as uuid from "uuid";
 
-function fullName(){
-    return `${this.firstName} ${this.lastName}`;
+function fullName() {
+  return `${this.firstName} ${this.lastName}`;
 }
 
 const customers = [
@@ -12,7 +12,7 @@ const customers = [
     firstName: "Marie",
     lastName: "Dupont",
     email: "marie@hotmail.fr",
-    address: {city: "Lille", country: "France"},
+    address: { city: "Lille", country: "France" },
     birthDate: "12/12/2001",
     fidelityPoints: 0,
     purchaseHistory: [],
@@ -23,7 +23,7 @@ const customers = [
     firstName: "Jhonn",
     lastName: "Doe",
     email: "Jhonn@hotmail.fr",
-    address: {city: "Rome", country: "Italie"},
+    address: { city: "Rome", country: "Italie" },
     birthDate: "12/12/2012",
     fidelityPoints: 0,
     purchaseHistory: [],
@@ -43,7 +43,7 @@ export const create = (customerData) => {
     purchaseHistory: [],
     fullName,
     addPurchase: function (purchase) {
-        this.purchaseHistory(purchase);
+      this.purchaseHistory(purchase);
     },
   });
 };

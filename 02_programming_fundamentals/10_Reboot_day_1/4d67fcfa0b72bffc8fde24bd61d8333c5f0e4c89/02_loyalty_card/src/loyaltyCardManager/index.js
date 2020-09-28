@@ -53,15 +53,15 @@ const customerActions = (customer) => {
         display.displayCustomer(customer);
         customerActions(customer);
         break;
-      // case "2":
-      //   choseCustomer();
-      //   //accessCuDa.arrive(reader);
-      //   break;
-      // case "3":
-      //   console.log("Bye !");
-      //   R.close();
-      //   break;
-
+        // case "2":
+        //   choseCustomer();
+        //   //accessCuDa.arrive(reader);
+        //   break;
+        // case "3":
+        //   console.log("Bye !");
+        //   R.close();
+        //   break;
+ 
       default:
         console.log("Unknow command");
         loyaltyCardManager(R);
