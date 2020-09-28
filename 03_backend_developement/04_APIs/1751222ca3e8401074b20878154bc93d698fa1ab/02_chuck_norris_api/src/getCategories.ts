@@ -1,10 +1,14 @@
-import * as request from "request"
+import * as request from "request";
 
-function getCategories() {
-  console.log("https://api.chucknorris.io/jokes/");
-   
-
+function getCategories(): void {
+  request("https://api.chucknorris.io/jokes/categories", (error, res, body) => {
+    if (error) {
+      console.error('error:', error);
+    } else {
+      console.log(body);
+    }
+  });
 }
 
-// leave line below for tests to work properly 
-export { getCategories }
+export { getCategories };
+
