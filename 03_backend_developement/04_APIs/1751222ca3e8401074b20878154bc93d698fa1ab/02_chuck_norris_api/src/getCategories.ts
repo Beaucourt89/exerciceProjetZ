@@ -1,11 +1,12 @@
 import * as request from "request";
 
 function getCategories(): void {
-  request("https://api.chucknorris.io/jokes/categories", (error, res, body) => {
+  request("https://api.chucknorris.io/jokes/categories", (error, res) => {
     if (error) {
-      console.error('error:', error);
+      console.error(error);
     } else {
-      console.log(body);
+      const categories = JSON.parse(res.body)
+      console.log(categories);
     }
   });
 }
