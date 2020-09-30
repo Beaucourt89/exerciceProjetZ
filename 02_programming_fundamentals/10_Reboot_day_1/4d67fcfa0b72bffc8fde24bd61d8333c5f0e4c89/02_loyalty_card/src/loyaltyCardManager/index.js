@@ -1,18 +1,52 @@
-//fichier qui gere que la partie affichage
+import * as CUSTOMERS from "./customers.js";
 import * as display from "./display.js";
-import * as customer from "./customer.js";
+
 let R;
 
-const ask = (question, callback) => R.question(`${question}\n>`, callback);
+const clear = () => console.log("\x1B[2J\x1B[0f");
 
-//
-const getCustomerInfo = () => {
-  ask("first name", (firstName) => {
-    ask("last name", (lastName) => {
-      ask("email", (email) => {
-        ask("birth date", (birthDate) => {
-          ask("city", (city) => {
-            ask("country", (country) => {
+const blank = (title = null) => {
+  console.log("********************************************************");
+  if (title) {
+    console.log(title.toUpperCase());
+    console.log("********************************************************");
+  }
+};
+
+const ask = (question, callback) => R.question(`\n🤖 ${question}\n> `, callback);
+
+const listCustomers = () => {
+  const customers = CUSTOMERS.getAll();
+  display.listCustomers(customers);
+};
+
+const addPurchase = (customer) => {
+  clear();
+  blank(`${customer.fullName()} - add purchase`);
+  ask("Purchase amount", (amount) => {
+    customer.addPurchase(parseFloat(amount));
+    customerActions(customer);
+  });
+};
+
+const useFidelityPoints = (customer) => {
+  blank(`${customer.fullName()} - use fidelity points`);
+  console.log(`${customer.fullName()} has ${customer.fidelityPoints} points.`);
+  ask("How many fidelity points are used?", (amount) => {
+    customer.fidelityPoints -= amount;
+    customerActions(customer);
+  });
+};
+
+const createCustomer = () => {
+  clear();
+  blank("create new customer");
+  ask("- first name:>", (firstName) => {
+    ask("- last name:>", (lastName) => {
+      ask("- email:>", (email) => {
+        ask("- birth date:>", (birthDate) => {
+          ask("- city:>", (city) => {
+            ask("- country:>", (country) => {
               const customerData = {
                 firstName,
                 lastName,
@@ -23,9 +57,9 @@ const getCustomerInfo = () => {
                   country,
                 },
               };
-              customer.create(customerData);
-              const customers = customer.getAll();
-              loyaltyCardManager(R);
+
+              const customer = CUSTOMERS.create(customerData);
+              customerActions(customer);
             });
           });
         });
@@ -34,69 +68,93 @@ const getCustomerInfo = () => {
   });
 };
 
-const choseCustomer = () => {
-  const customers = customers.getAll();
-  const fullNames = customers.map((customer) => customer.fullNames());
-  console.log(fullNames);
-  display.displayMenu(fullNames);
+const showCustomer = (customer) => {
+  blank(`${customer.fullName()}'s information`);
+  display.displayCustomer(customer);
+  customerActions(customer);
+};
+
+const showPurchaseHistory = (customer) => {
+  blank(`${customer.fullName()}'s purchase history`);
+  display.showPurchaseHistory(customer.purchaseHistory);
+  customerActions(customer);
+};
+
+const customerRouter = (choice, customer) => {
+  clear();
+  switch (choice) {
+    case "1":
+      showCustomer(customer);
+      break;
+    case "2":
+      addPurchase(customer);
+      break;
+    case "3":
+      useFidelityPoints(customer);
+      break;
+    case "4":
+      showPurchaseHistory(customer);
+      break;
+    case "5":
+      chooseCustomer();
+      break;
+    case "6":
+      run();
+      break;
+    case "7":
+      blank("closing");
+      R.close();
+      break;
+  }
+};
+
+const chooseCustomer = () => {
+  clear();
+  blank("choose a customer");
+  listCustomers();
   ask("Choose a customer", (index) => {
-    const customer = customers[index - 1];
+    const customer = CUSTOMERS.getAll()[index - 1];
     customerActions(customer);
   });
 };
 
 const customerActions = (customer) => {
-  display.displayMenu(["Show customer", "Add purchase", "Quit"]);
-  ask("Choose an action", (action) => {
-    switch (action) {
-      case "1":
-        display.displayCustomer(customer);
-        customerActions(customer);
-        break;
-        // case "2":
-        //   choseCustomer();
-        //   //accessCuDa.arrive(reader);
-        //   break;
-        // case "3":
-        //   console.log("Bye !");
-        //   R.close();
-        //   break;
- 
-      default:
-        console.log("Unknow command");
-        loyaltyCardManager(R);
-        break;
-    }
+  blank(`${customer.fullName()}`);
+  display.printList([
+    "Show account",
+    "Add purchase",
+    "Use fidelity points",
+    "Show purchase history",
+    "Choose another customer",
+    "Back to menu",
+    "Quit",
+  ]);
+  ask(`Choose an action${customer ? " for " + customer.fullName() : ""}`, (choice) => {
+    customerRouter(choice, customer);
   });
 };
 
-//Crée une Fonction qui lance l'Application
-export default function loyaltyCardManager(reader) {
-  R = reader;
-
-  console.log("Welcome to loyaltyCardManager");
-  //utilise la function displaymenu qui liste avec l'index le menu ci-dessous
-  display.displayMenu(["Add new customer", "Access customer data", "Quit"]);
-  ask("Choose an action", (action) => {
-    switch (action) {
+function run() {
+  blank();
+  display.printList(["Add new customer", "Access customer data", "Quit"]);
+  ask("Choose an action", (choice) => {
+    switch (choice) {
       case "1":
-        console.log("*** Customer added ***");
-        getCustomerInfo();
-        //addNewCustomer.arrive(reader);
+        createCustomer();
         break;
       case "2":
-        choseCustomer();
-        //accessCuDa.arrive(reader);
+        chooseCustomer();
         break;
       case "3":
-        console.log("Bye !");
+        blank("closing");
         R.close();
-        break;
-
-      default:
-        console.log("Unknow command");
-        loyaltyCardManager(R);
         break;
     }
   });
+}
+
+export default function start(reader) {
+  R = reader;
+  console.log("Welcome");
+  run();
 }
