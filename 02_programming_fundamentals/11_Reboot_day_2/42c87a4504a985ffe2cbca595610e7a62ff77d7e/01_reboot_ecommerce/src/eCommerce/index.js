@@ -1,151 +1,151 @@
-let READER;
-const articles = [
-  {
-    designation: "beer",
-    price: 4,
-    quantity: 300,
-  },
-  {
-    designation: "chips",
-    price: 2,
-    quantity: 25,
-  },
-  {
-    designation: "cheese",
-    price: 3,
-    quantity: 50,
-  },
-  {
-    designation: "olives",
-    price: 1,
-    quantity: 200,
-  },
-  {
-    designation: "waterBottles",
-    price: 0.5,
-    quantity: 1000,
-  },
-];
-const tabtab = [];
+const initDisplay = require("./display");
+const initShop = require("./shop");
+const initCart = require("./cart");
 
-const printElement = (action, index) => console.log(`${index + 1} ${action}`);
+let display, shop, cart;
+let warning = null;
 
-function printMenu(actionsList) {
-  console.clear();
-  console.log("**************************************************");
-  console.log("MENU");
-  console.log("**************************************************");
-  actionsList.forEach(printElement);
-}
+const mainMenu = () => {
+  display.clear();
 
-function menu(action) {
-  switch (action) {
-    case "1":
-      console.clear();
-      printBuyAProduct(articles);
-      break;
-    case "2":
-      console.clear();
-      printBuyACard();
-      break;
-    case "3":
-      console.clear();
-      //checkout();
-      break;
-    case "4":
-      console.log("Work hard!");
-      READER.close();
-      break;
-    default:
-      console.log("⚠️Cmd unknown⚠️");
-      eCommerce(READER);
+  if (warning) {
+    console.log(`⚠️  ${warning} ⚠️`);
+    warning = null;
   }
-}
 
-const printArticleElements = (articles, index) =>
-  console.log(`${index + 1} ${articles.designation} : ${articles.price}€ (quantity: ${articles.quantity})`);
-
-function printBuyAProduct() {
-  console.clear();
-  console.log("**************************************************");
-  console.log("SHOP");
-  console.log("**************************************************");
-  articles.forEach(printArticleElements);
-  READER.question("Choose a product \n>", (choix) => {
-    if (choix !== "q") {
-      READER.question("How much? \n>", (cb) => {
-        //console.log(choix);
-        console.log(articles[choix - 1]);
-        const result = articles[choix - 1].quantity - cb;
-        articles[choix - 1].quantity = result;
-        console.log(articles[choix - 1]);
-        tabtab.push(articles[choix - 1].designation, parseInt(cb) * articles[choix - 1].price);
-
-        printBuyAProduct();
-      });
-    } else {
-      eCommerce(READER);
+  display.menu(["Buy a product", "Show cart", "Checkout", "Quit"]);
+  display.ask("Choose an action", (action) => {
+    switch (action) {
+      case "1":
+        buyProduct();
+        break;
+      case "2":
+        showCart();
+        break;
+      case "3":
+        checkOut();
+        break;
+      case "4":
+        canCustomerLeave();
+        break;
+      default:
+        mainMenu();
+        console.log("Cmd unknown");
+        break;
     }
   });
-}
+};
 
-function printBuyACard() {
-  console.clear();
-  console.log("**************************************************");
-  console.log("CARD");
-  console.log("**************************************************");
-  console.log(tabtab);
-  console.log(`Tu as acheté ${tabtab[1]} : ${tabtab[0]} `);
-  console.log(`Total =  ${tabtab[1]+tabtab[3]}`);
+const checkOut = () => {
+  display.clear();
 
-  tabtab.forEach();
-}
-// function addBuyProduct(reader) {
-//   reader.question("", (taskName) => {
-//     const panier = {
-//       designation,
-//       price,
-//       quantity,
-//     };
-//     articles.push(panier);
-//     console.log("🤖 article added");
-//     eCommerce(READER);
-//   });
-// }
+  if (warning) {
+    console.log(`⚠️  ${warning} ⚠️`);
+    warning = null;
+  }
 
-// function menuShop(action) {
-//   switch (action) {
-//     case "1":
-//       console.clear();
-//       printBuyAProduct(articles);
-//       break;
-//     case "2":
-//       console.clear();
-//       //showCart();
-//       break;
-//     case "3":
-//       console.clear();
-//       //checkout();
-//       break;
-//     case "4":
-//       console.log("Work hard!");
-//       READER.close();
-//       break;
-//     default:
-//       console.log("⚠️Cmd unknown⚠️");
-//       eCommerce(READER);
-//   }
-// }
-
-function eCommerce(reader) {
-  READER = reader;
-  printMenu(["Buy a product", "Show cart", "Checkout", "Quit"]);
-  reader.question("🤖 Choose an action\n> ", (action) => {
-    menu(action);
+  display.printTitle("checkout");
+  display.showProducts(cart.getArticles());
+  const total = cart.computeTotal();
+  display.ask(`You have to pay: ${total}`, (amount) => {
+    const parsedAmount = parseFloat(amount);
+    if (parsedAmount === total) {
+      display.clear();
+      console.log("Thank you!");
+      display.printTitle("Goodbye!");
+      display.reader.close();
+    } else if (parsedAmount >= total) {
+      display.clear();
+      console.log("Thank you!");
+      console.log(`Here's the remaining: ${amount - total} €`);
+      display.printTitle("Goodbye!");
+      display.reader.close();
+    } else if (!Number.isNaN(parsedAmount)) {
+      warning = "Wrong amount 😁";
+      checkOut();
+    } else {
+      warning = "This is not money 😉";
+      checkOut();
+    }
   });
-}
+};
 
-// function showCart(params) {}
-// function checkout(params) {}
+const canCustomerLeave = () => {
+  if (cart.computeTotal() === 0) {
+    display.close();
+  } else {
+    warning = "Please checkout before leaving 💰👈";
+    mainMenu();
+  }
+};
 
-module.exports = eCommerce;
+const buyProduct = () => {
+  display.clear();
+  display.printTitle("Shop");
+
+  if (warning) {
+    console.log(`⚠️  ${warning} ⚠️`);
+    warning = null;
+  }
+
+  const articles = shop.getArticles();
+  display.showProducts(articles);
+  console.log(`${articles.length + 1} - back to menu`);
+  console.log(`${articles.length + 2} - quit`);
+  display.ask("Choose a product", (index) => {
+    if (index == articles.length + 1) {
+      mainMenu();
+    }
+    if (index == articles.length + 2) {
+      canCustomerLeave();
+    }
+    display.ask("How much?", (quantity) => {
+      const article = articles[index - 1];
+      if (article && article.quantity >= quantity) {
+        cart.addArticle({
+          label: article.label,
+          price: article.price,
+          quantity: quantity,
+        });
+        article.quantity -= quantity;
+        mainMenu();
+      } else if (article && article.quantity < quantity) {
+        warning = `There's not enough ${article.label}`;
+        buyProduct();
+      } else {
+        warning = "Unknown CMD";
+        buyProduct();
+      }
+    });
+  });
+};
+
+const showCart = () => {
+  display.clear();
+  display.printTitle("cart");
+  const basket = cart.getArticles();
+  display.showProducts(basket);
+  display.printTitle(`total: ${cart.computeTotal()} €`);
+  display.showActions(["Back to menu", "Quit"]);
+  display.ask("Choose an action", (choice) => {
+    switch (choice) {
+      case "1":
+        mainMenu();
+        break;
+      case "2":
+        canCustomerLeave();
+        break;
+      default:
+        display.clear();
+        console.log("Unkown cmd");
+        showCart();
+    }
+  });
+};
+
+module.exports = function eCommerce(reader) {
+  cart = initCart();
+  display = initDisplay(reader, cart);
+  shop = initShop();
+  mainMenu();
+};
