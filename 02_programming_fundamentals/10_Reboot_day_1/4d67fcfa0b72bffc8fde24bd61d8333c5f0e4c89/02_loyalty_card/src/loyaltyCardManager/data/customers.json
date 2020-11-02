@@ -84,7 +84,7 @@
       "city": "Somewhere",
       "country": "Else"
     },
-    "fidelityPoints": 41.65
+    "fidelityPoints": 61.65
   },
   {
     "purchaseHistory": [
@@ -104,5 +104,19 @@
       "country": "France"
     },
     "fidelityPoints": 116.65
+  },
+  {
+    "purchaseHistory": [],
+    "usedFidelityPoints": 0,
+    "id": "276e70ab-3bc0-494f-a39c-2aa1d89848c9",
+    "firstName": "toto",
+    "lastName": "tutu",
+    "birthDate": "21",
+    "email": "tititi",
+    "address": {
+      "city": "fr",
+      "country": "rt"
+    },
+    "fidelityPoints": 0
   }
 ]
